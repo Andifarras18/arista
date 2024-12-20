@@ -59,9 +59,9 @@
                 <h6 class="collapse-header">Management :</h6>
                 <a class="collapse-item" href="{{ route('hkt.index') }}">HKT</a>
                 {{-- <hr class="sidebar-divider" style="background-color: rgb(119, 117, 117); height: 0.1px;"> --}}
-                <a class="collapse-item" href="#">Keuangan</a>
-                <a class="collapse-item" href="#">Kelembagaan</a>
-                <a class="collapse-item" href="#">Kemahasiswaan</a>
+                <a class="collapse-item" href="{{ route('keuangan.index') }}">Keuangan</a>
+                <a class="collapse-item" href="{{ route('kelembagaan.index') }}">Kelembagaan</a>
+                <a class="collapse-item" href="{{ route('kemahasiswaan.index') }}">Kemahasiswaan</a>
                 <a class="collapse-item" href="#">Akademik</a>
                 <a class="collapse-item" href="#">SDPT</a>
                 {{-- <hr class="sidebar-divider" style="background-color: rgb(119, 117, 117); height: 0.1px;"> --}}
@@ -79,7 +79,6 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Data Master Options:</h6>
                 <a class="collapse-item" href="{{ route('klasifikasi.index') }}"> Klasifikasi</a>
-                <a class="collapse-item" href="{{ route('pencipta_arsip.index') }}"> Unit Kerja</a>
                 <a class="collapse-item" href="{{ route('unit.index') }}">Unit Pengelolah</a>
                 <a class="collapse-item" href="{{ route('lokasi.index') }}">Lokasi Arsip</a>
                 <a class="collapse-item" href="{{ route('tingkat.index') }}">Tingkat Perkembangan</a>

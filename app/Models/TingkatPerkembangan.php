@@ -11,4 +11,13 @@ class TingkatPerkembangan extends Model
 
     protected $table = 'tingkat_perkembangans';
     protected $fillable = ['tingkat_perkembangan'];
+
+    public function hkts()
+    {
+        return $this->hasMany(Hkt::class, 'kode_klasifikasi_id');
+    }
+    public function keuangan()
+    {
+        return $this->hasMany(Keuangan::class, 'kode_klasifikasi_id');
+    }
 }

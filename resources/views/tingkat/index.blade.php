@@ -40,7 +40,7 @@
                     <tbody>
                         @foreach($tingkat as $index => $item)
                         <tr>
-                            <td>{{ $index + 1 }}</td>
+                            <td class="text-center">{{ $index + 1 }}.</td>
                             <td>{{ $item->tingkat_perkembangan }}</td>
                             <td class="text-center">
                                 <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editModal{{ $item->id }}" title="Edit">

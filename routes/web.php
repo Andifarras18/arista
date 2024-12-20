@@ -2,11 +2,14 @@
 
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HKTController;
+use App\Http\Controllers\HktController;
+use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NasibAkhirController;
+use App\Http\Controllers\KelembagaanController;
 use App\Http\Controllers\KlasifikasiController;
 use App\Http\Controllers\LokasiArsipController;
+use App\Http\Controllers\KemahasiswaanController;
 use App\Http\Controllers\PenciptaArsipController;
 use App\Http\Controllers\UnitPengelolaController;
 use App\Http\Controllers\TingkatPerkembanganController;
@@ -51,8 +54,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-
-
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::resource('klasifikasi', KlasifikasiController::class);
 Route::resource('pencipta_arsip', PenciptaArsipController::class);
@@ -60,7 +61,11 @@ Route::resource('lokasi', LokasiArsipController::class);
 Route::resource('unit', UnitPengelolaController::class);
 Route::resource('tingkat', TingkatPerkembanganController::class);
 Route::resource('nasib', NasibAkhirController::class);
-Route::resource('hkt', HKTController::class);
+Route::resource('hkt', HktController::class);
+Route::resource('keuangan', KeuanganController::class);
+Route::resource('kelembagaan', KelembagaanController::class);
+Route::resource('kemahasiswaan', KemahasiswaanController::class);
+
 
 
 

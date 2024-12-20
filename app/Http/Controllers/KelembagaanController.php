@@ -1,7 +1,8 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Models\Hkt;
+use App\Models\Kelembagaan;
 use App\Models\NasibAkhir;
 use App\Models\Klasifikasi;
 use App\Models\LokasiArsip;
@@ -12,23 +13,21 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class HktController extends Controller
+class KelembagaanController extends Controller
 {
     public function index()
     {
-        Log::info('Fetching all HKTs');
-        $hkts = Hkt::with(['klasifikasi', 'tingkatPerkembangan', 'lokasiArsip', 'nasibAkhir', 'unitPengelola'])->get();
-        Log::info('Fetched HKTs: ' . $hkts->count() . ' records');
+        Log::info('Fetching all Kelembagaans');
+        $kelembagaans = Kelembagaan::all();
+        Log::info('Fetched Kelembagaans: ' . $kelembagaans->count() . ' records');
 
-        return view('hkt.index', compact('hkts'));
+        return view('kelembagaan.index', compact('kelembagaans'));
     }
 
-    public function show(Hkt $hkt)
+    public function show(Kelembagaan $kelembagaan)
     {
-        Log::info('Showing details for HKT with ID: ' . $hkt->id);
-        Log::info('File URL: ' . Storage::url($hkt->file_path));
-        Log::info('File Path: ' . public_path('storage/hkts_files/' . basename($hkt->file_path)));
-        return view('hkt.show', compact('hkt'));
+        Log::info('Showing details for Kelembagaan with ID: ' . $kelembagaan->id);
+        return view('kelembagaan.show', compact('kelembagaan'));
     }
 
     public function create()
@@ -42,7 +41,7 @@ class HktController extends Controller
 
         Log::info('Fetched data for dropdowns: klasifikasi, tingkatPerkembangan, lokasiArsip, nasibAkhir, unitPengelola');
 
-        return view('hkt.create', compact('klasifikasi', 'tingkatPerkembangan', 'lokasiArsip', 'nasibAkhir', 'unitPengelolas'));
+        return view('kelembagaan.create', compact('klasifikasi', 'tingkatPerkembangan', 'lokasiArsip', 'nasibAkhir', 'unitPengelolas'));
     }
 
     public function store(Request $request)
@@ -50,7 +49,6 @@ class HktController extends Controller
         Log::info('Store method called');
         Log::info('Request Data: ', $request->all());
 
-        // Validate input
         $validated = $request->validate([
             'nomor_surat' => 'required|string|max:255',
             'tanggal_surat' => 'required|date',
@@ -70,39 +68,34 @@ class HktController extends Controller
             'file_path' => 'nullable|file|mimes:pdf|max:5120',
         ]);
 
-        // Handle file upload
         if ($request->hasFile('file_path')) {
             Log::info('File detected for upload');
-            $filePath = $request->file('file_path')->store('hkts_files', 'public');
-            Log::info('File uploaded to: ' . $filePath);
+            $filePath = $request->file('file_path')->store('kelembagaan_files', 'public');
             $validated['file_path'] = $filePath;
+            Log::info('File uploaded to: ' . $filePath);
         }
 
-        // Create the HKT record
-        Hkt::create($validated);
-        Alert::success('Berhasil', 'Data HKT berhasil disimpan.');
-        Log::info('HKT record successfully created');
-        return redirect()->route('hkt.index');
+        Kelembagaan::create($validated);
+        Alert::success('Berhasil', 'Data berhasil disimpan.');
+        Log::info('Kelembagaan record successfully created');
+        return redirect()->route('kelembagaan.index');
     }
 
-    public function edit(Hkt $hkt)
+    public function edit(Kelembagaan $kelembagaan)
     {
-        Log::info('Fetching data for editing HKT with ID: ' . $hkt->id);
+        Log::info('Fetching data for editing Kelembagaan with ID: ' . $kelembagaan->id);
         $klasifikasi = Klasifikasi::all();
         $tingkatPerkembangan = TingkatPerkembangan::all();
         $lokasiArsip = LokasiArsip::all();
         $nasibAkhir = NasibAkhir::all();
         $unitPengelola = UnitPengelola::all();
 
-        Log::info('Fetched data for edit form: klasifikasi, tingkatPerkembangan, lokasiArsip, nasibAkhir, unitPengelola');
-
-        return view('hkt.edit', compact('hkt', 'klasifikasi', 'tingkatPerkembangan', 'lokasiArsip', 'nasibAkhir', 'unitPengelola'));
+        return view('kelembagaan.edit', compact('kelembagaan', 'klasifikasi', 'tingkatPerkembangan', 'lokasiArsip', 'nasibAkhir', 'unitPengelola'));
     }
 
-    public function update(Request $request, Hkt $hkt)
+    public function update(Request $request, Kelembagaan $kelembagaan)
     {
-        Log::info('Update method called for HKT with ID: ' . $hkt->id);
-        Log::info('Request Data for Update: ', $request->all());
+        Log::info('Update method called for Kelembagaan with ID: ' . $kelembagaan->id);
 
         $validated = $request->validate([
             'nomor_surat' => 'required|string|max:255',
@@ -123,41 +116,27 @@ class HktController extends Controller
             'file_path' => 'nullable|file|mimes:pdf|max:5120',
         ]);
 
-        Log::info('Validated Data for Update: ', $validated);
-
-        // Handle file upload
         if ($request->hasFile('file_path')) {
-            Log::info('New file detected for update');
-
-            if ($hkt->file_path) {
-                Log::info('Deleting old file');
-                Storage::disk('public')->delete($hkt->file_path);
+            if ($kelembagaan->file_path) {
+                Storage::disk('public')->delete($kelembagaan->file_path);
             }
-
-            $filePath = $request->file('file_path')->store('hkts_files', 'public');
+            $filePath = $request->file('file_path')->store('kelembagaan_files', 'public');
             $validated['file_path'] = $filePath;
-            Log::info('New file uploaded to: ' . $filePath);
         }
 
-        $hkt->update($validated);
-        Log::info('HKT with ID ' . $hkt->id . ' successfully updated');
-        Alert::success('Berhasil', 'Data HKT berhasil diupdate.');
-        return redirect()->route('hkt.index');
+        $kelembagaan->update($validated);
+        Alert::success('Berhasil', 'Data Kelembagaan berhasil diupdate.');
+        return redirect()->route('kelembagaan.index');
     }
 
-    public function destroy(Hkt $hkt)
+    public function destroy(Kelembagaan $kelembagaan)
     {
-        Log::info('Destroy method called for HKT with ID: ' . $hkt->id);
-
-        // Delete file from storage
-        if ($hkt->file_path) {
-            Log::info('Deleting file from storage: ' . $hkt->file_path);
-            Storage::disk('public')->delete($hkt->file_path);
+        if ($kelembagaan->file_path) {
+            Storage::disk('public')->delete($kelembagaan->file_path);
         }
 
-        $hkt->delete();
-        Log::info('HKT with ID ' . $hkt->id . ' successfully deleted');
-        Alert::success('Berhasil', 'Data HKT berhasil dihapus.');
-        return redirect()->route('hkt.index');
+        $kelembagaan->delete();
+        Alert::success('Berhasil', 'Data Kelembagaan berhasil dihapus.');
+        return redirect()->route('kelembagaan.index');
     }
 }
