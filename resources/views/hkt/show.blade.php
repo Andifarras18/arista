@@ -102,10 +102,16 @@
                 <div class="card-body">
                     @if($hkt->file_path)
                         <!-- Menampilkan file PDF menggunakan iframe -->
-                        <iframe src="{{ Storage::url(($hkt->file_path)) }}" type="application/pdf" width="100%" height="741px"></iframe>
-                    @else
+                        <iframe src="{{ Storage::urpl(($hkt->file_path)) }}" type="application/pdf" width="100%" height="741px"></iframe>
+                        {{-- <iframe src="{{ asset('storage/hkts_files/' . basename($hkt->file_path)) }}" type="application/pdf" width="100%" height="741px"></iframe> --}}
+                        @else
                         <p>Tidak ada file yang ditampilkan</p>
                     @endif
+                    {{-- @if (file_exists(public_path('storage/hkts_files/' . basename($hkt->file_path))))
+                        <p>File tersedia dan symlink berhasil.</p>
+                    @else
+                        <p>File tidak ditemukan atau symlink bermasalah.</p>
+                    @endif --}}
                 </div>
             </div>
         </div>

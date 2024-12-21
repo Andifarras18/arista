@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kemahasiswaan;
 use App\Models\NasibAkhir;
-use App\Models\KodeKlasifikasi;
+use App\Models\Klasifikasi;
 use App\Models\LokasiArsip;
 use Illuminate\Http\Request;
 use App\Models\UnitPengelola;
@@ -34,7 +34,7 @@ class KemahasiswaanController extends Controller
     {
         Log::info('Fetching dropdown data for create form');
         $unitPengelola = UnitPengelola::all();
-        $klasifikasi = KodeKlasifikasi::all();
+        $klasifikasi = Klasifikasi::all();
         $tingkatPerkembangan = TingkatPerkembangan::all();
         $lokasiArsip = LokasiArsip::all();
         $nasibAkhir = NasibAkhir::all();
@@ -63,7 +63,7 @@ class KemahasiswaanController extends Controller
             'lokasi_arsip_id' => 'required|exists:lokasi_arsips,id',
             'retensi' => 'required|integer',
             'keterangan' => 'required|string|in:Aktif,Inaktif',
-            'nasib_akhir_id' => 'required|exists:nasib_akhirs,id',
+            'nasib_akhir_id' => 'required|exists:nasib_akhir,id',
             'jumlah_item' => 'required|integer',
             'lampiran' => 'nullable|string|max:255',
             'file_path' => 'nullable|file|mimes:pdf|max:5120',
@@ -88,7 +88,7 @@ class KemahasiswaanController extends Controller
     {
         Log::info('Fetching data for editing Kemahasiswaan with ID: ' . $kemahasiswaan->id);
         $unitPengelola = UnitPengelola::all();
-        $klasifikasi = KodeKlasifikasi::all();
+        $klasifikasi = Klasifikasi::all();
         $tingkatPerkembangan = TingkatPerkembangan::all();
         $lokasiArsip = LokasiArsip::all();
         $nasibAkhir = NasibAkhir::all();
