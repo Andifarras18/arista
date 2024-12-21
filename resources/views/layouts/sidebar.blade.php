@@ -62,7 +62,7 @@
                 <a class="collapse-item" href="{{ route('keuangan.index') }}">Keuangan</a>
                 <a class="collapse-item" href="{{ route('kelembagaan.index') }}">Kelembagaan</a>
                 <a class="collapse-item" href="{{ route('kemahasiswaan.index') }}">Kemahasiswaan</a>
-                <a class="collapse-item" href="#">Akademik</a>
+                <a class="collapse-item" href="{{ route('akademik.index') }}">Akademik</a>
                 <a class="collapse-item" href="#">SDPT</a>
                 {{-- <hr class="sidebar-divider" style="background-color: rgb(119, 117, 117); height: 0.1px;"> --}}
             </div>
