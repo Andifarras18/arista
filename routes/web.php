@@ -4,6 +4,7 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HktController;
 use App\Http\Controllers\AkademikController;
+use App\Http\Controllers\SdptController;
 use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NasibAkhirController;
@@ -67,6 +68,7 @@ Route::resource('keuangan', KeuanganController::class);
 Route::resource('kelembagaan', KelembagaanController::class);
 Route::resource('kemahasiswaan', KemahasiswaanController::class);
 Route::resource('akademik', AkademikController::class);
+Route::resource('sdpt', SdptController::class);
 
 
 
