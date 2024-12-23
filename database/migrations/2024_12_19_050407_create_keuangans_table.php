@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('kode_klasifikasi_id')->constrained('klasifikasi')->onDelete('cascade');
             $table->string('prihal');
             $table->text('uraian_informasi');
-            $table->foreignId('tingkat_perkembangan_id')->constrained('tingkat_perkembangans')->onDelete('cascade');
+            $table->foreignId('tingkat_perkembangan_id')->constrained('tingkat_perkembangan')->onDelete('cascade');
             $table->foreignId('lokasi_arsip_id')->constrained('lokasi_arsips')->onDelete('cascade');
             $table->integer('jumlah_item');
             $table->string('lampiran')->nullable();
